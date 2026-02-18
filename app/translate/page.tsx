@@ -581,7 +581,7 @@ function TranslatePage() {
             </div>
 
             {/* 1. TOP SECTION: Original & Translation Side-by-Side */}
-            <div className="result-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+            <div className="result-grid">
 
               {/* Original */}
               <div data-selectable style={{ background: "#0a0a0a", border: "1px solid #1a1a1a", borderRadius: "12px", padding: "24px", display: "flex", flexDirection: "column" }}>
@@ -759,15 +759,38 @@ function TranslatePage() {
       </div>
 
       <style jsx>{`
+        /* Desktop: Fixed height panels */
+        .result-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          height: calc(100vh - 280px); /* Fit within desktop view */
+          min-height: 400px;
+          overflow-y: auto; /* Allow scrolling within the fixed height container? No, result-grid is the container for panels */
+        }
+        
+        /* Make children scrollable individually */
+        .result-grid > div {
+           overflow-y: auto;
+           height: 100%;
+        }
+
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         @media (max-width: 900px) {
           .translate-layout { grid-template-columns: 1fr !important; }
-          .result-grid { grid-template-columns: 1fr !important; }
+          /* Mobile: Stack and auto height */
+          .result-grid { 
+            grid-template-columns: 1fr !important; 
+            height: auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+          }
+          .result-grid > div { height: auto !important; overflow-y: visible !important; }
         }
 
         @media (max-width: 640px) {
-          .result-grid { grid-template-columns: 1fr !important; }
+          .result-grid { grid-template-columns: 1fr !important; height: auto !important; }
         }
       `}</style>
     </div>
