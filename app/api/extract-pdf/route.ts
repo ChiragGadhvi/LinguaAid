@@ -1,47 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { execFile } from "child_process";
-import path from "path";
+import pdfParse from "pdf-parse";
 
 export const runtime = "nodejs";
-
-function runExtractor(pdfBuffer: Buffer): Promise<{ text: string; pages: number }> {
-  return new Promise((resolve, reject) => {
-    const scriptPath = path.join(process.cwd(), "scripts", "extract-pdf.js");
-
-    const child = execFile(
-      "node",
-      [scriptPath],
-      { timeout: 30_000, maxBuffer: 50 * 1024 * 1024 },
-      (err, stdout, stderr) => {
-        if (stderr) console.warn("PDF extractor stderr:", stderr);
-
-        // stdout may have warnings before the JSON — find the JSON object
-        const jsonMatch = stdout.match(/\{[\s\S]*\}$/);
-        if (!jsonMatch) {
-          return reject(new Error("No JSON output from PDF extractor"));
-        }
-
-        try {
-          const result = JSON.parse(jsonMatch[0]);
-          if (!result.ok) {
-            return reject(new Error(result.error ?? "PDF extraction failed"));
-          }
-          resolve({ text: result.text, pages: result.pages ?? 1 });
-        } catch {
-          reject(new Error("Failed to parse PDF extractor output"));
-        }
-      }
-    );
-
-    // Send the PDF as base64 via stdin
-    if (child.stdin) {
-      child.stdin.write(pdfBuffer.toString("base64"));
-      child.stdin.end();
-    } else {
-      reject(new Error("Could not open stdin to PDF extractor"));
-    }
-  });
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -52,6 +12,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
+    // Basic validation
     const isPdf =
       file.type === "application/pdf" ||
       file.type === "application/octet-stream" ||
@@ -71,10 +32,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Convert File to Buffer
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const { text, pages } = await runExtractor(buffer);
+    // Extract text using pdf-parse directly
+    const data = await pdfParse(buffer);
+    
+    // Clean up text
+    const text = (data.text || "")
+      .replace(/\r\n/g, "\n") // Windows newlines
+      .replace(/\r/g, "\n")   // Mac newlines
+      .replace(/\n{4,}/g, "\n\n\n") // Collapse excessive newlines
+      .replace(/[ \t]{3,}/g, "  ") // Collapse excessive tabs/spaces
+      .trim();
 
     if (!text || text.length < 10) {
       return NextResponse.json(
@@ -88,7 +59,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       text,
-      pages,
+      pages: data.numpages,
       fileName: file.name,
       charCount: text.length,
     });
