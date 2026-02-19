@@ -209,7 +209,7 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="steps-grid">
+          <div className="steps-grid" style={{ marginBottom: "48px" }}>
             {STEPS.map(({ num, title, desc, icon: Icon }, i) => (
               <div key={num} className="glass-card" style={{
                 padding: "28px",
@@ -233,6 +233,46 @@ export default function HomePage() {
                 <p style={{ color: "#fff", lineHeight: "1.7", fontSize: "13px", opacity: 0.35 }}>{desc}</p>
               </div>
             ))}
+          </div>
+
+          {/* Demo Loop Video */}
+          <div style={{
+            width: "100%", maxWidth: "900px", margin: "0 auto",
+            borderRadius: "16px", overflow: "hidden",
+            border: "1px solid #1a1a1a", background: "#000",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.4)"
+          }}>
+            <video
+              src="https://res.cloudinary.com/db5gbpl3a/video/upload/v1771507930/howitworks_n5axg9.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={{ width: "100%", display: "block" }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ── FUNNY AD SECTION ── */}
+      <section id="funny-ad" ref={ref("funny-ad")} style={{
+        padding: "80px 24px", textAlign: "center",
+        borderBottom: "1px solid #111"
+      }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <span className="badge badge-accent" style={{ marginBottom: "12px", display: "inline-block" }}>The Story</span>
+          <h2 className="section-heading" style={{ color: "#fff", marginBottom: "32px" }}>Wait, One More Thing...</h2>
+          
+          <div style={{
+            width: "100%", borderRadius: "20px", overflow: "hidden",
+            border: "1px solid #222", background: "#0a0a0a",
+            position: "relative", paddingBottom: "56.25%", height: 0
+          }}>
+            <video
+              src="https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4"
+              controls
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: "20px" }}
+            />
           </div>
         </div>
       </section>
@@ -316,36 +356,73 @@ export default function HomePage() {
               No credit card required. Upload your first document and get a full
               translation and explanation in seconds.
             </p>
-            <button
-              onClick={() => openModal("signup")}
-              className="btn-primary"
-              style={{
-                display: "inline-flex", alignItems: "center",
-                gap: "8px", fontSize: "14px", padding: "12px 28px",
-              }}
+            <div style={{ display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap" }}>
+              <button
+                onClick={() => openModal("signup")}
+                className="btn-primary"
+                style={{
+                  display: "inline-flex", alignItems: "center",
+                  gap: "8px", fontSize: "14px", padding: "12px 28px",
+                }}
+              >
+                Create Free Account <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SOCIAL & RESOURCES ── */}
+      <section style={{ padding: "40px 24px", borderTop: "1px solid #111", background: "#020202" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", textAlign: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
+            <a 
+              href="https://github.com/ChiragGadhvi/LinguaAid" 
+              target="_blank" 
+              className="btn-secondary"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", textDecoration: "none" }}
             >
-              Create Free Account <ChevronRight size={16} />
-            </button>
+              Star on GitHub <Zap size={15} />
+            </a>
+            <a 
+              href="https://dev.to/chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed-5cdd" 
+              target="_blank" 
+              className="btn-secondary"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", textDecoration: "none" }}
+            >
+              Read the Story <BookOpen size={15} />
+            </a>
           </div>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
       <footer style={{
-        borderTop: "1px solid #111", padding: "28px 24px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        flexWrap: "wrap", gap: "12px",
+        borderTop: "1px solid #111", padding: "40px 24px",
+        display: "flex", flexDirection: "column", alignItems: "center", gap: "24px",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <Image src="/favicon.png" alt="LinguaAid" width={22} height={22} style={{ borderRadius: "5px" }} />
-          <span style={{ fontWeight: "700", color: "#fff", fontSize: "13px", opacity: 0.5 }}>LinguaAid</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <Image src="/favicon.png" alt="LinguaAid" width={28} height={28} style={{ borderRadius: "6px" }} />
+          <span style={{ fontWeight: "800", color: "#fff", fontSize: "18px", letterSpacing: "-0.5px" }}>LinguaAid</span>
         </div>
-        <p style={{ color: "#fff", fontSize: "12px", opacity: 0.25 }}>
-          Breaking language barriers for immigrants and refugees worldwide.
-        </p>
-        <p style={{ color: "#fff", fontSize: "12px", opacity: 0.25 }}>
-          Next.js · Supabase · Lingo.dev
-        </p>
+        
+        <div style={{ textAlign: "center", maxWidth: "400px" }}>
+          <p style={{ color: "#888", fontSize: "13px", lineHeight: "1.6", marginBottom: "8px" }}>
+            Breaking language barriers for immigrants and refugees worldwide with AI-powered document simplification.
+          </p>
+          <p style={{ color: "#444", fontSize: "12px", fontWeight: "500" }}>
+            Built with Next.js · Supabase · Lingo.dev
+          </p>
+        </div>
+
+        <div style={{ display: "flex", gap: "24px" }}>
+          <a href="https://github.com/ChiragGadhvi/LinguaAid" target="_blank" style={{ color: "#555", transition: "color 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.color="#fff"} onMouseLeave={(e) => e.currentTarget.style.color="#555"}>
+            GitHub
+          </a>
+          <a href="https://dev.to/chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed-5cdd" target="_blank" style={{ color: "#555", transition: "color 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.color="#fff"} onMouseLeave={(e) => e.currentTarget.style.color="#555"}>
+            Blog
+          </a>
+        </div>
       </footer>
 
       <style jsx>{`
