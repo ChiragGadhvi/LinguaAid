@@ -5,17 +5,20 @@
 > "Every Document, Every Language, Instantly Understood."
 
 ## 🎬 Presentation & Demo Video
-[![Presentation Video](https://img.shields.io/badge/Watch-Presentation%20Video-red?style=for-the-badge&logo=youtube)](https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4)
+
+<video src="https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4" controls width="100%" poster="https://res.cloudinary.com/db5gbpl3a/image/upload/v1739964528/thumbnail_linguaaid.png">
+  Your browser does not support the video tag.
+</video>
 
 ---
 
 ## 📚 Technical Writing
 Check out the deep-dive articles on how LinguaAid was built using Lingo.dev:
 
-- **Medium**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://medium.com/@chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingo-dev-changed-7eed149bf0f2)
-- **Hashnode**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://chiraggadhvi.hashnode.dev/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed?showSharer=true)
-- **Personal Blog**: [Building LinguaAid with Lingo.dev](https://www.chiraggadhvi.in/blog/i-built-a-document-translator-in-48-hours-here-s-what-lingo-dev-changed)
-- **Dev.to**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://dev.to/chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed-5cdd)
+- **Medium**: <a href="https://medium.com/@chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingo-dev-changed-7eed149bf0f2" target="_blank">I built a document translator in 48 hours — here’s what Lingo.dev changed</a>
+- **Hashnode**: <a href="https://chiraggadhvi.hashnode.dev/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed?showSharer=true" target="_blank">I built a document translator in 48 hours — here’s what Lingo.dev changed</a>
+- **Personal Blog**: <a href="https://www.chiraggadhvi.in/blog/i-built-a-document-translator-in-48-hours-here-s-what-lingo-dev-changed" target="_blank">Building LinguaAid with Lingo.dev</a>
+- **Dev.to**: <a href="https://dev.to/chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed-5cdd" target="_blank">I built a document translator in 48 hours — here’s what Lingo.dev changed</a>
 
 ---
 
@@ -26,11 +29,11 @@ Language barriers often mean these vital documents are misunderstood or ignored 
 
 ## 🛠️ Tech Stack & Integration
 
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
-![Lingo.dev](https://img.shields.io/badge/Lingo.dev-blueviolet?style=for-the-badge&logo=i18next&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+<a href="https://nextjs.org/" target="_blank"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" /></a>
+<a href="https://lingo.dev/" target="_blank"><img src="https://img.shields.io/badge/Lingo.dev-blueviolet?style=for-the-badge&logo=i18next&logoColor=white" alt="Lingo.dev" /></a>
+<a href="https://supabase.com/" target="_blank"><img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" /></a>
+<a href="https://openai.com/" target="_blank"><img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white" alt="OpenAI" /></a>
+<a href="https://tailwindcss.com/" target="_blank"><img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="TailwindCSS" /></a>
 
 ### 🌍 Lingo.dev Integration
 LinguaAid leverages **Lingo.dev** as its high-performance translation core:
