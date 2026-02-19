@@ -6,9 +6,10 @@
 
 ## 🎬 Presentation & Demo Video
 
-[![Watch the Demo](https://res.cloudinary.com/db5gbpl3a/image/upload/v1739964528/thumbnail_linguaaid.png)](https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4)
+Click the button below to view the official project presentation and demo:
 
-> **Note**: Click the image above to watch the full project presentation and demo.
+[![Watch Presentation Video](https://img.shields.io/badge/Watch--Presentation--Video-EA4335?style=for-the-badge&logo=youtube&logoColor=white)](https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4)
+
 
 ---
 
