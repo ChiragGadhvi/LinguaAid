@@ -4,6 +4,19 @@
 
 > "Every Document, Every Language, Instantly Understood."
 
+## 🎬 Presentation & Demo Video
+[![Presentation Video](https://img.shields.io/badge/Watch-Presentation%20Video-red?style=for-the-badge&logo=youtube)](https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4)
+
+---
+
+## 📚 Technical Writing
+Check out the deep-dive articles on how LinguaAid was built using Lingo.dev:
+
+- **Medium**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://medium.com/@chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingo-dev-changed-7eed149bf0f2)
+- **Hashnode**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://chiraggadhvi.hashnode.dev/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed?showSharer=true)
+- **Personal Blog**: [Building LinguaAid with Lingo.dev](https://www.chiraggadhvi.in/blog/i-built-a-document-translator-in-48-hours-here-s-what-lingo-dev-changed)
+- **Dev.to**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://dev.to/chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed-5cdd)
+
 ---
 
 ## 💡 Inspiration
@@ -11,39 +24,41 @@ Navigating a new country is hard. For millions of immigrants and refugees, under
 
 Language barriers often mean these vital documents are misunderstood or ignored until it's too late. We built **LinguaAid** to bridge this gap, not just by translating words, but by explaining the *context* and *actions required* in plain language.
 
-## 🚀 What It Does
-LinguaAid is an intelligent document assistant that:
-1.  **Extracts Text from PDFs**: Users can drag-and-drop complex legal or medical forms.
-2.  **Instantly Translates**: Supports **50+ languages**, from Spanish and Mandarin to Amharic and Hmong, prioritizing underserved communities.
-3.  **Simplifies Jargon**: Uses AI to rewrite complex legalese into **plain, simple language**.
-4.  **Extracts Key Points**: Automatically identifies critical information (dates, deadlines, amounts due).
-5.  **Flags Urgent Actions**: Highlights immediate steps the user needs to take to protect their rights or health.
+## 🛠️ Tech Stack & Integration
 
-## 🛠️ How We Built It
-We built LinguaAid using a modern, scalable tech stack:
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Lingo.dev](https://img.shields.io/badge/Lingo.dev-blueviolet?style=for-the-badge&logo=i18next&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 
--   **Frontend**: [Next.js 16](https://nextjs.org/) (App Router) for a fast, responsive UI.
--   **Styling**: [Tailwind CSS](https://tailwindcss.com/) with a custom glassmorphism design system for a premium, accessible feel.
--   **Database & Auth**: [Supabase](https://supabase.com/) for secure user authentication and storing translation history.
--   **Translation Engine**:
-    -   **Lingo.dev**: Primary translation API for high-quality, culturally aware translations.
-    -   **OpenAI (GPT-4o)**: Fallback translation and powerful simplification logic to "de-jargon" complex text.
--   **PDF Processing**: Custom API route for text extraction.
+### 🌍 Lingo.dev Integration
+LinguaAid leverages **Lingo.dev** as its high-performance translation core:
+- **Context-Aware Translation**: Beyond literal word-to-word translation, Lingo.dev preserves the legal and medical context critical for immigrant documentation.
+- **Workflow Efficiency**: We utilized the Lingo.dev ecosystem to manage complex locale mappings smoothly.
+- **Speed**: Optimized API response times ensure users get results in seconds, even for lengthy documents.
 
-## 🧠 Challenges We Ran Into
--   **Handling PDF Layouts**: Extracting clean text from scans or complex layouts was tricky. We implemented a robust extraction pipeline.
--   **Cultural Context**: Translations often lose nuance. We tuned our AI prompts to prioritize *meaning* over literal translation, and to explain concepts that might not exist in the target culture.
--   **Latency**: Chaining multiple AI calls (translation -> simplification -> key points) builds up latency to users. We optimized this by parallelizing requests and using streaming UI updates.
+## 🏗️ How We Built It
+We engineered LinguaAid as a production-ready solution:
+
+-   **Frontend**: Built with **Next.js 16** and **Framer Motion** for a fluid, accessible experience.
+-   **Intelligent Processing**: A custom pipeline that chain-extracts text, translates via **Lingo.dev**, and then "de-jargons" using **GPT-4o**.
+-   **Security**: **Supabase SSR** ensures that sensitive documents are only accessible to their owners.
+-   **Real-time Insights**: A custom algorithm to scan translated text for "Urgent Action Items" (Deadlines, Fees, Medical Instructions).
+
+## 🧠 Challenges & Solutions
+-   **PDF Complexity**: Handling disparate layouts was solved with a modular text-extraction strategy using `pdf-parse`.
+-   **The "Nuance" Problem**: Translation alone isn't enough. We bridged the cultural gap by adding an AI "Simplification" layer that explains host-country concepts.
 
 ## 🏅 Accomplishments That We're Proud Of
--   **Global Accessibility**: We support over 50 languages, including many that are often overlooked by major translation tools (e.g., Tigrinya, Hmong, Pashto).
+-   **Global Accessibility**: We support over 50 languages, including many that are often overlooked (e.g., Tigrinya, Hmong, Pashto).
 -   **Real-time Logic**: The "Urgent Action" detection can genuinely save users from missing court dates or medical follow-ups.
--   **Selection Translator**: Just highlight any text on the result page to get an instant, context-aware translation popup—a feature we use daily!
+-   **Selection Translator**: Just highlight any text on the result page to get an instant, context-aware translation popup!
 
 ## 🔮 What's Next for LinguaAid
 -   **Voice Interface**: Adding text-to-speech for users with low literacy.
--   **Community Verified Translations**: Allowing trusted community members to verify and improve translations for local dialects.
--   **Offline Mode**: A mobile app version for users with limited fast internet access.
+-   **Community Verified Translations**: Allowing trusted community members to verify and improve translations.
+-   **Offline Mode**: A mobile app version for users with limited data access.
 
 ---
 
@@ -81,15 +96,7 @@ We built LinguaAid using a modern, scalable tech stack:
     npm run dev
     ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 ---
 
-## 🤝 Contributing
-We welcome contributions! Please feel free to verify translations or suggest new document types.
+*Built with ❤️ for the **Multilingual Hackathon #2**.*
 
-## 📄 License
-MIT
-
----
-*Built with ❤️ for the [Your Hackathon Name] Hackathon.*
