@@ -76,10 +76,10 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
         <div className="desk-actions" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           {user ? (
             <>
-              {/* Dashboard */}
-              <Link href="/dashboard" style={{
+              {/* Single set: icon always shown, text shown only on desktop via CSS */}
+              <Link href="/dashboard" className="nav-action-btn" style={{
                 display: "flex", alignItems: "center", gap: "6px",
-                padding: "7px 14px", borderRadius: "7px", textDecoration: "none",
+                padding: "7px 10px", borderRadius: "7px", textDecoration: "none",
                 fontSize: "13px", fontWeight: "600", color: "#ccc",
                 border: "1px solid #2a2a2a", background: "#0d0d0d",
                 transition: "all 0.15s ease",
@@ -95,31 +95,27 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
                   (e.currentTarget as HTMLElement).style.background = "#0d0d0d";
                 }}
               >
-                <LayoutDashboard size={13} /> Dashboard
+                <LayoutDashboard size={15} />
+                <span className="nav-btn-label">Dashboard</span>
               </Link>
 
-              {/* Translate */}
-              <Link href="/translate" style={{
+              <Link href="/translate" className="nav-action-btn" style={{
                 display: "flex", alignItems: "center", gap: "6px",
-                padding: "7px 14px", borderRadius: "7px", textDecoration: "none",
+                padding: "7px 10px", borderRadius: "7px", textDecoration: "none",
                 fontSize: "13px", fontWeight: "700", color: "#000",
                 background: "#fff", border: "1px solid #fff",
                 transition: "all 0.15s ease",
               }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#e0e0e0";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#fff";
-                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#e0e0e0"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#fff"; }}
               >
-                <FileText size={13} /> Translate
+                <FileText size={15} />
+                <span className="nav-btn-label">Translate</span>
               </Link>
 
-              {/* Sign Out — always visible */}
-              <button onClick={handleSignOut} style={{
+              <button onClick={handleSignOut} className="nav-action-btn" style={{
                 display: "flex", alignItems: "center", gap: "6px",
-                padding: "7px 12px", borderRadius: "7px",
+                padding: "7px 10px", borderRadius: "7px",
                 background: "#0d0d0d", border: "1px solid #2a2a2a",
                 cursor: "pointer", color: "#888",
                 fontFamily: "Inconsolata, monospace",
@@ -137,12 +133,13 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
                   (e.currentTarget as HTMLElement).style.background = "#0d0d0d";
                 }}
               >
-                <LogOut size={13} /> Sign Out
+                <LogOut size={15} />
+                <span className="nav-btn-label">Sign Out</span>
               </button>
             </>
           ) : (
             <>
-              <button onClick={() => handleAuth("signin")} style={{
+              <button onClick={() => handleAuth("signin")} className="mob-hide-btn" style={{
                 padding: "7px 14px", borderRadius: "7px",
                 fontSize: "13px", fontWeight: "600", color: "#ccc",
                 border: "1px solid #2a2a2a", background: "#0d0d0d",
@@ -160,33 +157,28 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
               >
                 Sign In
               </button>
-              <button onClick={() => handleAuth("signup")} style={{
+              <button onClick={() => handleAuth("signup")} className="mob-hide-btn" style={{
                 padding: "7px 14px", borderRadius: "7px",
                 fontSize: "13px", fontWeight: "700", color: "#000",
                 background: "#fff", border: "1px solid #fff",
                 cursor: "pointer", fontFamily: "Inconsolata, monospace",
                 transition: "all 0.15s ease",
               }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#e0e0e0";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = "#fff";
-                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#e0e0e0"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#fff"; }}
               >
                 Get Started
               </button>
+              {/* Hamburger — only for logged-out mobile */}
+              <button onClick={() => setMenuOpen(!menuOpen)} className="mob-btn" style={{
+                background: "#0d0d0d", border: "1px solid #2a2a2a",
+                borderRadius: "7px", cursor: "pointer", color: "#fff",
+                padding: "7px", display: "none", alignItems: "center",
+              }}>
+                {menuOpen ? <X size={17} /> : <Menu size={17} />}
+              </button>
             </>
           )}
-
-          {/* Mobile hamburger */}
-          <button onClick={() => setMenuOpen(!menuOpen)} className="mob-btn" style={{
-            background: "#0d0d0d", border: "1px solid #2a2a2a",
-            borderRadius: "7px", cursor: "pointer", color: "#fff",
-            padding: "7px", display: "none", alignItems: "center",
-          }}>
-            {menuOpen ? <X size={17} /> : <Menu size={17} />}
-          </button>
         </div>
       </div>
 
@@ -198,22 +190,6 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
         }}>
           {user ? (
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              <Link href="/dashboard" onClick={() => setMenuOpen(false)} style={{
-                display: "flex", alignItems: "center", gap: "8px",
-                padding: "12px 14px", borderRadius: "8px", textDecoration: "none",
-                fontSize: "14px", fontWeight: "600", color: "#fff",
-                background: "#0d0d0d", border: "1px solid #222",
-              }}>
-                <LayoutDashboard size={15} /> Dashboard
-              </Link>
-              <Link href="/translate" onClick={() => setMenuOpen(false)} style={{
-                display: "flex", alignItems: "center", gap: "8px",
-                padding: "12px 14px", borderRadius: "8px", textDecoration: "none",
-                fontSize: "14px", fontWeight: "700", color: "#000",
-                background: "#fff",
-              }}>
-                <FileText size={15} /> Translate
-              </Link>
               <button onClick={handleSignOut} style={{
                 display: "flex", alignItems: "center", gap: "8px",
                 padding: "12px 14px", borderRadius: "8px",
@@ -247,14 +223,22 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
         </div>
       )}
 
-      <style jsx>{`
-        @media (max-width: 680px) {
-          .desk-actions > a,
-          .desk-actions > button:not(.mob-btn) { display: none !important; }
+
+      <style>{`
+        /* Desktop: show text labels in nav buttons */
+        .nav-btn-label { display: inline; }
+
+        /* Mobile: icon only — hide text labels */
+        @media (max-width: 640px) {
+          .nav-btn-label { display: none; }
+          /* Tighten padding on mobile so buttons fit */
+          .nav-action-btn { padding: 8px !important; }
+          /* Hide Sign In / Get Started (logged-out) buttons, show hamburger */
+          .mob-hide-btn { display: none !important; }
           .mob-btn { display: flex !important; }
         }
 
-        /* Mobile Menu Animation */
+        /* Mobile Menu */
         .mobile-menu {
           position: fixed !important;
           top: 60px !important;

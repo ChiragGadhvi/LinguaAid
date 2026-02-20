@@ -122,16 +122,16 @@ export default function DashboardPage() {
     <div style={{ minHeight: "100vh", background: "#000" }}>
       <Navbar />
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "76px 20px 100px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "76px 16px 80px" }}>
 
         {/* ── Header ── */}
-        <div style={{
+        <div className="dash-header" style={{
           display: "flex", alignItems: "flex-start", justifyContent: "space-between",
           marginBottom: "28px", flexWrap: "wrap", gap: "12px",
         }}>
           <div>
             <h1 style={{
-              fontSize: "clamp(22px, 3vw, 32px)", fontWeight: "900",
+              fontSize: "clamp(20px, 4vw, 32px)", fontWeight: "900",
               letterSpacing: "-0.8px", color: "#fff", marginBottom: "4px",
             }}>
               My Dashboard
@@ -140,7 +140,7 @@ export default function DashboardPage() {
               {userEmail || "Loading…"}
             </p>
           </div>
-          <Link href="/translate" style={{
+          <Link href="/translate" className="new-trans-btn" style={{
             display: "inline-flex", alignItems: "center", gap: "7px",
             padding: "10px 20px", borderRadius: "8px",
             background: "#fff", border: "1px solid #fff",
@@ -374,7 +374,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes pulse {
           0%, 100% { opacity: 0.4; }
@@ -383,6 +383,8 @@ export default function DashboardPage() {
         @media (max-width: 600px) {
           .stats-grid { grid-template-columns: 1fr !important; }
           .translations-grid { grid-template-columns: 1fr !important; }
+          .dash-header { flex-direction: column !important; align-items: stretch !important; }
+          .new-trans-btn { justify-content: center !important; }
         }
       `}</style>
     </div>
