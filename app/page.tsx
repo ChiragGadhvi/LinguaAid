@@ -6,6 +6,7 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import AuthModal from "@/components/AuthModal";
 import { CoverFlow, type CoverFlowItem } from "@/components/ui/coverflow";
+import { MorphingChar } from "@/components/ui/MorphingChar";
 import { motion } from "motion/react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -199,15 +200,9 @@ export default function HomePage() {
 
         {/* Centre content */}
         <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", position: "relative", zIndex: 10 }}>
-          {/* Icon */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
-            <div style={{
-              width: "56px", height: "56px", borderRadius: "14px",
-              border: "1px solid #222", background: "#0a0a0a",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <Image src="/favicon.png" alt="LinguaAid" width={36} height={36} style={{ borderRadius: "8px" }} />
-            </div>
+          {/* Morphing language character */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
+            <MorphingChar size={44} />
           </div>
 
           <div style={{ marginBottom: "18px" }}>
