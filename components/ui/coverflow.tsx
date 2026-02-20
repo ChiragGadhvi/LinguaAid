@@ -339,7 +339,7 @@ function CoverFlowItemCard({
       }}
       onClick={onClick}
     >
-      <div className="relative w-full h-full rounded-xl shadow-2xl bg-black">
+      <div className="relative w-full h-full rounded-xl bg-black">
         <div className="absolute inset-0 rounded-xl border border-white/10 z-20 pointer-events-none" />
         <div className="relative w-full h-full overflow-hidden rounded-xl">
           <img
