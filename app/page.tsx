@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import AuthModal from "@/components/AuthModal";
 import { CoverFlow, type CoverFlowItem } from "@/components/ui/coverflow";
 import { motion } from "motion/react";
+import { createClient } from "@/lib/supabase/client";
 import {
   Upload, Zap, Shield, FileText, Heart, ArrowRight,
   CheckCircle, Languages, Sparkles, BookOpen, Home,
@@ -58,6 +60,9 @@ export default function HomePage() {
   const refs = useRef<Record<string, HTMLElement | null>>({});
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<"signin" | "signup">("signup");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+  const supabase = createClient();
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -68,6 +73,12 @@ export default function HomePage() {
     );
     Object.values(refs.current).forEach((r) => r && obs.observe(r));
     return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setIsLoggedIn(!!data.user);
+    });
   }, []);
 
   const ref = (id: string) => (el: HTMLElement | null) => { refs.current[id] = el; };
@@ -222,11 +233,11 @@ export default function HomePage() {
 
           <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
             <button
-              onClick={() => openModal("signup")}
+              onClick={() => isLoggedIn ? router.push("/dashboard") : openModal("signup")}
               className="btn-primary"
               style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "14px", padding: "12px 26px" }}
             >
-              Start Translating Free <ArrowRight size={15} />
+              {isLoggedIn ? "Go to Dashboard" : "Start Translating Free"} <ArrowRight size={15} />
             </button>
             <a href="#how-it-works" className="btn-secondary" style={{
               display: "inline-flex", alignItems: "center",
