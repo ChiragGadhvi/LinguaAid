@@ -15,16 +15,7 @@ Click the button below to view the official project presentation and demo:
 
 ## 📸 Screenshots & Videos
 
-### 🖼️ Screenshots
-
-| | |
-|:---:|:---:|
-| ![Screenshot 1](public/screenshots/1.png) | ![Screenshot 2](public/screenshots/2.png) |
-| ![Screenshot 3](public/screenshots/3.png) | ![Screenshot 4](public/screenshots/4.png) |
-
----
-
-### 📺 Full Demo on YouTube
+###  Full Demo on YouTube
 
 [![Watch on YouTube](https://img.shields.io/badge/Watch%20Demo%20on-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=fQVnzdNfXw4)
 
@@ -37,6 +28,15 @@ Click the button below to view the official project presentation and demo:
 https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4
 
 > **Note**: Click the link above to watch the landing page walkthrough video.
+
+---
+
+### 🖼️ Screenshots
+
+| | |
+|:---:|:---:|
+| ![Screenshot 1](public/screenshots/1.png) | ![Screenshot 2](public/screenshots/2.png) |
+| ![Screenshot 3](public/screenshots/3.png) | ![Screenshot 4](public/screenshots/4.png) |
 
 ---
 
