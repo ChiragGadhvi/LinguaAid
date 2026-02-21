@@ -1,133 +1,101 @@
+<div align="center">
+
 # 🌍 LinguaAid
 
 **Breaking Information Barriers for Immigrants & Refugees**
 
-> "Every Document, Every Language, Instantly Understood."
-
-## 🎬 Presentation & Demo Video
-
-Click the button below to view the official project presentation and demo:
-
-[![Watch Presentation Video](https://img.shields.io/badge/Watch--Presentation--Video-EA4335?style=for-the-badge&logo=youtube&logoColor=white)](https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4)
-
-
----
-
-## 📸 Screenshots & Videos
-
-###  Full Demo on YouTube
-
-[![Watch on YouTube](https://img.shields.io/badge/Watch%20Demo%20on-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=fQVnzdNfXw4)
-
-[![LinguaAid YouTube Demo](https://img.youtube.com/vi/fQVnzdNfXw4/maxresdefault.jpg)](https://www.youtube.com/watch?v=fQVnzdNfXw4)
-
----
-
-### 🎬 How It Works — Landing Page Demo
-
-https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4
-
-> **Note**: Click the link above to watch the landing page walkthrough video.
-
----
-
-### 🖼️ Screenshots
-
-| | |
-|:---:|:---:|
-| ![Screenshot 1](public/screenshots/1.png) | ![Screenshot 2](public/screenshots/2.png) |
-| ![Screenshot 3](public/screenshots/3.png) | ![Screenshot 4](public/screenshots/4.png) |
-
----
-
-## 📚 Technical Writing
-Check out the deep-dive articles on how LinguaAid was built using Lingo.dev:
-
-- **Medium**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://medium.com/@chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingo-dev-changed-7eed149bf0f2)
-- **Hashnode**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://chiraggadhvi.hashnode.dev/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed?showSharer=true)
-- **Personal Blog**: [Building LinguaAid with Lingo.dev](https://www.chiraggadhvi.in/blog/i-built-a-document-translator-in-48-hours-here-s-what-lingo-dev-changed)
-- **Dev.to**: [I built a document translator in 48 hours — here’s what Lingo.dev changed](https://dev.to/chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed-5cdd)
-
----
-
-## 💡 Inspiration
-Navigating a new country is hard. For millions of immigrants and refugees, understanding critical documents—like eviction notices, hospital discharge instructions, or government benefit letters—can be the difference between stability and crisis.
-
-Language barriers often mean these vital documents are misunderstood or ignored until it's too late. We built **LinguaAid** to bridge this gap, not just by translating words, but by explaining the *context* and *actions required* in plain language.
-
-## 🛠️ Tech Stack & Integration
+*Upload any document. Get it translated, simplified, and explained — instantly.*
 
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Lingo.dev](https://img.shields.io/badge/Lingo.dev-blueviolet?style=for-the-badge&logo=i18next&logoColor=white)](https://lingo.dev/)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-### 🌍 Lingo.dev Integration
-LinguaAid leverages **Lingo.dev** as its high-performance translation core:
-- **Context-Aware Translation**: Beyond literal word-to-word translation, Lingo.dev preserves the legal and medical context critical for immigrant documentation.
-- **Workflow Efficiency**: We utilized the Lingo.dev ecosystem to manage complex locale mappings smoothly.
-- **Speed**: Optimized API response times ensure users get results in seconds, even for lengthy documents.
-
-## 🏗️ How We Built It
-We engineered LinguaAid as a production-ready solution:
-
--   **Frontend**: Built with **Next.js 16** and **Framer Motion** for a fluid, accessible experience.
--   **Intelligent Processing**: A custom pipeline that chain-extracts text, translates via **Lingo.dev**, and then "de-jargons" using **GPT-4o**.
--   **Security**: **Supabase SSR** ensures that sensitive documents are only accessible to their owners.
--   **Real-time Insights**: A custom algorithm to scan translated text for "Urgent Action Items" (Deadlines, Fees, Medical Instructions).
-
-## 🧠 Challenges & Solutions
--   **PDF Complexity**: Handling disparate layouts was solved with a modular text-extraction strategy using `pdf-parse`.
--   **The "Nuance" Problem**: Translation alone isn't enough. We bridged the cultural gap by adding an AI "Simplification" layer that explains host-country concepts.
-
-## 🏅 Accomplishments That We're Proud Of
--   **Global Accessibility**: We support over 50 languages, including many that are often overlooked (e.g., Tigrinya, Hmong, Pashto).
--   **Real-time Logic**: The "Urgent Action" detection can genuinely save users from missing court dates or medical follow-ups.
--   **Selection Translator**: Just highlight any text on the result page to get an instant, context-aware translation popup!
-
-## 🔮 What's Next for LinguaAid
--   **Voice Interface**: Adding text-to-speech for users with low literacy.
--   **Community Verified Translations**: Allowing trusted community members to verify and improve translations.
--   **Offline Mode**: A mobile app version for users with limited data access.
+</div>
 
 ---
 
-## 📦 Getting Started
-
-### Prerequisites
--   Node.js 18+
--   Supabase Account
--   Lingo.dev / OpenAI API Keys
-
-### Installation
-
-1.  **Clone the repo**
-    ```bash
-    git clone https://github.com/yourusername/LinguaAid.git
-    cd LinguaAid
-    ```
-
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Set up Environment Variables**
-    Create a `.env.local` file in the root directory:
-    ```bash
-    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-    OPENAI_API_KEY=your_openai_key
-    LINGODOTDEV_API_KEY=your_lingo_key
-    ```
-
-4.  **Run the development server**
-    ```bash
-    npm run dev
-    ```
+<video src="public/Github.mp4" autoplay muted loop width="100%"></video>
 
 ---
+
+## 📺 Demo
+
+[![Watch the Demo](https://img.youtube.com/vi/fQVnzdNfXw4/maxresdefault.jpg)](https://www.youtube.com/watch?v=fQVnzdNfXw4)
+
+▶️ [Watch on YouTube →](https://www.youtube.com/watch?v=fQVnzdNfXw4)
+
+---
+
+## � We Also Made a Funny Ad
+
+Because why not.
+
+[![Watch the Funny Ad](https://img.shields.io/badge/Watch%20Funny%20Ad-EA4335?style=for-the-badge&logo=youtube&logoColor=white)](https://res.cloudinary.com/db5gbpl3a/video/upload/v1771499452/Linguaaidnew_yi8jyy.mp4)
+
+---
+
+## 💡 Why LinguaAid?
+
+Millions of immigrants and refugees receive critical documents — eviction notices, hospital instructions, government letters — in a language they don't speak. Misunderstanding these can have life-altering consequences.
+
+**LinguaAid** doesn't just translate. It explains what the document means, what actions are needed, and flags anything urgent — in the user's language.
+
+---
+
+## 🥚 Easter Egg
+
+**Highlight any word or sentence** on the results page and a translation popup appears instantly — translate it to any language, on the fly. No need to re-upload. Just select and go.
+
+---
+
+## 🌍 Powered by Lingo.dev
+
+All translations are handled by **[Lingo.dev](https://lingo.dev/)** — a high-performance, context-aware translation engine that goes beyond word-for-word. It preserves the legal and medical nuance in critical documents and supports 50+ languages, including underserved ones like Tigrinya, Hmong, and Pashto.
+
+---
+
+## 🛠️ Built With
+
+- **Next.js 16** — Frontend
+- **Lingo.dev** — Translation engine
+- **GPT-4o** — Jargon simplification & urgent action detection
+- **Supabase** — Auth & secure document storage
+- **Framer Motion** — Animations
+
+---
+
+## 📚 Technical Writing
+
+- [Medium](https://medium.com/@chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingo-dev-changed-7eed149bf0f2)
+- [Hashnode](https://chiraggadhvi.hashnode.dev/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed?showSharer=true)
+- [Dev.to](https://dev.to/chiraggadhvi/i-built-a-document-translator-in-48-hours-heres-what-lingodev-changed-5cdd)
+- [Personal Blog](https://www.chiraggadhvi.in/blog/i-built-a-document-translator-in-48-hours-here-s-what-lingo-dev-changed)
+
+---
+
+## � Run Locally
+
+```bash
+git clone https://github.com/yourusername/LinguaAid.git
+cd LinguaAid
+npm install
+npm run dev
+```
+
+Create a `.env.local`:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+OPENAI_API_KEY=your_openai_key
+LINGODOTDEV_API_KEY=your_lingo_key
+```
+
+---
+
+<div align="center">
 
 *Built with ❤️ for the **Multilingual Hackathon #2**.*
 
+</div>
