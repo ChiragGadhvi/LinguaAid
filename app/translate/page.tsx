@@ -34,6 +34,49 @@ const DOC_TYPES = [
   { value: "other",      label: "Other",      icon: MoreHorizontal },
 ];
 
+const SAMPLE_DOCUMENTS = [
+  {
+    file: "eviction-court-summons.pdf",
+    label: "Eviction Court Summons",
+    description: "Court notice for eviction hearing",
+    docType: "legal",
+    icon: Scale,
+    emoji: "⚖️",
+  },
+  {
+    file: "hospital-discharge-instructions.pdf",
+    label: "Hospital Discharge Instructions",
+    description: "Post-hospital care & medication info",
+    docType: "healthcare",
+    icon: Stethoscope,
+    emoji: "🏥",
+  },
+  {
+    file: "housing-lease-section8.pdf",
+    label: "Section 8 Housing Lease",
+    description: "Government-assisted housing agreement",
+    docType: "housing",
+    icon: Home,
+    emoji: "🏠",
+  },
+  {
+    file: "ssi-benefits-approval.pdf",
+    label: "SSI Benefits Approval",
+    description: "Social Security benefit approval letter",
+    docType: "civic",
+    icon: BookOpen,
+    emoji: "📋",
+  },
+  {
+    file: "uscis-i485-receipt-notice.pdf",
+    label: "USCIS I-485 Receipt",
+    description: "Immigration green card application notice",
+    docType: "civic",
+    icon: Globe,
+    emoji: "🛂",
+  },
+];
+
 type Step = "input" | "translating" | "result";
 
 function TranslatePage() {
@@ -51,6 +94,7 @@ function TranslatePage() {
   const [targetLang, setTargetLang] = useState("Hindi");
   const [langOpen, setLangOpen] = useState(false);
   const [langSearch, setLangSearch] = useState("");
+  const [loadingSample, setLoadingSample] = useState<string | null>(null);
 
   const [translatedText, setTranslatedText] = useState("");
   const [simplifiedText, setSimplifiedText] = useState("");
@@ -113,6 +157,23 @@ function TranslatePage() {
       setFileName("");
     }
   }, []);
+
+  const handleSampleDocument = useCallback(async (sample: typeof SAMPLE_DOCUMENTS[0]) => {
+    setLoadingSample(sample.file);
+    setError("");
+    try {
+      const res = await fetch(`/Sample%20Documents/${encodeURIComponent(sample.file)}`);
+      if (!res.ok) throw new Error("Could not load sample document.");
+      const blob = await res.blob();
+      const file = new File([blob], sample.file, { type: "application/pdf" });
+      setDocType(sample.docType);
+      await handleFileUpload(file);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to load sample document.");
+    } finally {
+      setLoadingSample(null);
+    }
+  }, [handleFileUpload]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -330,7 +391,7 @@ function TranslatePage() {
               </div>
 
               {/* Upload zone */}
-              {inputMode === "upload" ? (
+              {inputMode === "upload" ? (<>
                 <div
                   className={`drop-zone ${dragOver ? "drag-over" : ""}`}
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -369,7 +430,73 @@ function TranslatePage() {
                     </>
                   )}
                 </div>
-              ) : (
+
+                {/* Sample Documents */}
+                {!fileName && !progress && (
+                  <div style={{ marginTop: "20px" }}>
+                    <p style={{
+                      fontSize: "11px", fontWeight: "700", color: "#fff",
+                      opacity: 0.4, textTransform: "uppercase", letterSpacing: "0.1em",
+                      marginBottom: "10px",
+                    }}>
+                      ✦ Try a Sample Document
+                    </p>
+                    <div style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+                      gap: "8px",
+                    }}>
+                      {SAMPLE_DOCUMENTS.map((sample) => {
+                        const isLoading = loadingSample === sample.file;
+                        return (
+                          <button
+                            key={sample.file}
+                            onClick={(e) => { e.stopPropagation(); handleSampleDocument(sample); }}
+                            disabled={loadingSample !== null}
+                            style={{
+                              display: "flex", flexDirection: "column", alignItems: "flex-start",
+                              gap: "6px", padding: "12px", borderRadius: "10px",
+                              background: isLoading ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.04)",
+                              border: isLoading ? "1px solid #444" : "1px solid #1e1e1e",
+                              cursor: loadingSample !== null ? "not-allowed" : "pointer",
+                              textAlign: "left", transition: "all 0.15s ease",
+                              opacity: loadingSample !== null && !isLoading ? 0.4 : 1,
+                            }}
+                            onMouseEnter={(e) => {
+                              if (!loadingSample) {
+                                (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
+                                (e.currentTarget as HTMLElement).style.borderColor = "#333";
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (!loadingSample) {
+                                (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
+                                (e.currentTarget as HTMLElement).style.borderColor = "#1e1e1e";
+                              }
+                            }}
+                          >
+                            <span style={{ fontSize: "20px", lineHeight: 1 }}>
+                              {isLoading ? "⏳" : sample.emoji}
+                            </span>
+                            <span style={{
+                              fontSize: "12px", fontWeight: "700", color: "#fff",
+                              fontFamily: "Inconsolata, monospace", lineHeight: "1.3",
+                            }}>
+                              {sample.label}
+                            </span>
+                            <span style={{
+                              fontSize: "11px", color: "#fff", opacity: 0.4,
+                              fontFamily: "Inconsolata, monospace", lineHeight: "1.4",
+                            }}>
+                              {isLoading ? "Loading…" : sample.description}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </>) : (
                 <div style={{ position: "relative" }}>
                   <textarea
                     id="document-text"
