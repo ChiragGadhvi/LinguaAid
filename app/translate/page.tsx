@@ -10,7 +10,7 @@ import {
   Upload, FileText, Globe, Sparkles, Loader2, CheckCircle,
   AlertCircle, Copy, ChevronDown, X, ArrowLeft,
   Stethoscope, Scale, Home, BookOpen, MoreHorizontal, RotateCcw,
-  Download, AlertTriangle,
+  Download, AlertTriangle, Phone, Star,
 } from "lucide-react";
 
 
@@ -76,6 +76,193 @@ const SAMPLE_DOCUMENTS = [
     emoji: "🛂",
   },
 ];
+
+// ── Lawyer dataset ──────────────────────────────────────────────────────────
+type LawyerSpecialty = "legal" | "housing" | "healthcare" | "civic" | "other";
+interface Lawyer {
+  id: string;
+  name: string;
+  firm: string;
+  initials: string;
+  avatarColor: string;
+  photo: string;
+  specialties: LawyerSpecialty[];
+  languages: string[];
+  location: string;
+  rating: number;
+  reviews: number;
+  badge: string;
+  badgeColor: string;
+  phone: string;
+  bio: string;
+}
+
+const LAWYERS: Lawyer[] = [
+  {
+    id: "1", name: "Maria Elena Vásquez", firm: "Vásquez Immigration Law",
+    initials: "MV", avatarColor: "#7c3aed",
+    photo: "https://i.pravatar.cc/150?img=5",
+    specialties: ["legal", "civic"], languages: ["English", "Spanish", "Portuguese"],
+    location: "Los Angeles, CA", rating: 4.9, reviews: 318,
+    badge: "Free Consultation", badgeColor: "#16a34a",
+    phone: "+1 (213) 555-0182",
+    bio: "Immigration & civil rights attorney with 14 years helping Spanish-speaking clients navigate U.S. courts and federal agencies.",
+  },
+  {
+    id: "2", name: "Priya Nair-Sharma", firm: "South Asian Legal Aid Collective",
+    initials: "PN", avatarColor: "#0891b2",
+    photo: "https://i.pravatar.cc/150?img=47",
+    specialties: ["legal", "civic", "housing"], languages: ["English", "Hindi", "Tamil", "Gujarati", "Marathi", "Punjabi", "Urdu"],
+    location: "Chicago, IL", rating: 4.8, reviews: 201,
+    badge: "Pro Bono Available", badgeColor: "#d97706",
+    phone: "+1 (312) 555-0247",
+    bio: "Specialises in immigration, housing discrimination, and benefits law for South Asian communities across the Midwest.",
+  },
+  {
+    id: "3", name: "Omar Al-Rashidi", firm: "Al-Rashidi & Associates",
+    initials: "OA", avatarColor: "#b45309",
+    photo: "https://i.pravatar.cc/150?img=12",
+    specialties: ["legal", "civic"], languages: ["English", "Arabic", "Dari", "Pashto"],
+    location: "Dearborn, MI", rating: 4.9, reviews: 412,
+    badge: "Free Consultation", badgeColor: "#16a34a",
+    phone: "+1 (313) 555-0091",
+    bio: "Nationally recognised immigration attorney serving Arabic-speaking communities with asylum, deportation defence, and naturalisation cases.",
+  },
+  {
+    id: "4", name: "Linh Nguyen-Tran", firm: "Southeast Asian Community Law Center",
+    initials: "LN", avatarColor: "#0f766e",
+    photo: "https://i.pravatar.cc/150?img=44",
+    specialties: ["housing", "civic", "legal"], languages: ["English", "Vietnamese", "Khmer", "Lao", "Thai"],
+    location: "San Jose, CA", rating: 4.7, reviews: 157,
+    badge: "Legal Aid", badgeColor: "#2563eb",
+    phone: "+1 (408) 555-0334",
+    bio: "Non-profit attorney providing free legal services to low-income Southeast Asian families on housing, immigration, and family law.",
+  },
+  {
+    id: "5", name: "Dr. Amara Diallo", firm: "African Diaspora Legal Partners",
+    initials: "AD", avatarColor: "#be185d",
+    photo: "https://i.pravatar.cc/150?img=64",
+    specialties: ["civic", "legal", "housing"], languages: ["English", "French", "Wolof", "Amharic", "Somali", "Swahili"],
+    location: "Washington, D.C.", rating: 5.0, reviews: 89,
+    badge: "Pro Bono Available", badgeColor: "#d97706",
+    phone: "+1 (202) 555-0618",
+    bio: "Dual-qualified lawyer (U.S. & France) specialising in asylum, refugee status, and civic benefits for African diaspora communities.",
+  },
+  {
+    id: "6", name: "Wei-Lin Zhang", firm: "Pacific Rim Immigration Law",
+    initials: "WZ", avatarColor: "#4338ca",
+    photo: "https://i.pravatar.cc/150?img=15",
+    specialties: ["legal", "civic"], languages: ["English", "Mandarin", "Cantonese", "Japanese", "Korean"],
+    location: "New York, NY", rating: 4.8, reviews: 276,
+    badge: "Free Consultation", badgeColor: "#16a34a",
+    phone: "+1 (212) 555-0509",
+    bio: "Immigration specialist for East Asian professionals and families — EB-2/EB-3 visas, green cards, and citizenship applications.",
+  },
+  {
+    id: "7", name: "Sofia Mendes Costa", firm: "Brazilian-American Legal Services",
+    initials: "SM", avatarColor: "#15803d",
+    photo: "https://i.pravatar.cc/150?img=9",
+    specialties: ["legal", "housing", "civic"], languages: ["English", "Portuguese", "Spanish"],
+    location: "Miami, FL", rating: 4.7, reviews: 193,
+    badge: "Free Consultation", badgeColor: "#16a34a",
+    phone: "+1 (305) 555-0741",
+    bio: "Bilingual attorney focused on immigration relief, housing rights, and workers' compensation for Brazilian and Latino communities.",
+  },
+  {
+    id: "8", name: "James Okafor", firm: "Okafor Housing Rights Clinic",
+    initials: "JO", avatarColor: "#92400e",
+    photo: "https://i.pravatar.cc/150?img=56",
+    specialties: ["housing"], languages: ["English", "Yoruba", "Igbo", "Hausa"],
+    location: "Houston, TX", rating: 4.9, reviews: 144,
+    badge: "Legal Aid", badgeColor: "#2563eb",
+    phone: "+1 (713) 555-0388",
+    bio: "Tenant rights attorney with expertise in eviction defence, Section 8 disputes, and fair housing complaints — free services for qualifying clients.",
+  },
+  {
+    id: "9", name: "Dr. Fatima Al-Haddad", firm: "Muslim Legal Fund of America — Health Unit",
+    initials: "FA", avatarColor: "#6d28d9",
+    photo: "https://i.pravatar.cc/150?img=49",
+    specialties: ["healthcare", "civic"], languages: ["English", "Arabic", "Urdu", "Persian"],
+    location: "Dallas, TX", rating: 4.8, reviews: 112,
+    badge: "Pro Bono Available", badgeColor: "#d97706",
+    phone: "+1 (972) 555-0227",
+    bio: "Disability benefits and healthcare law specialist — SSI/SSDI appeals, Medicare/Medicaid denials, and medical debt rights.",
+  },
+  {
+    id: "10", name: "Yuki Tanaka", firm: "Japan-America Legal Bridge",
+    initials: "YT", avatarColor: "#0369a1",
+    photo: "https://i.pravatar.cc/150?img=51",
+    specialties: ["legal", "civic", "healthcare"], languages: ["English", "Japanese", "Korean"],
+    location: "Seattle, WA", rating: 4.6, reviews: 78,
+    badge: "Free Consultation", badgeColor: "#16a34a",
+    phone: "+1 (206) 555-0154",
+    bio: "Cross-border legal services for Japanese nationals and Korean communities — visa issues, employment rights, and benefits access.",
+  },
+  {
+    id: "11", name: "Ananya Krishnamurthy", firm: "Tamil Legal Advocates Network",
+    initials: "AK", avatarColor: "#be123c",
+    photo: "https://i.pravatar.cc/150?img=25",
+    specialties: ["healthcare", "civic", "legal"], languages: ["English", "Tamil", "Telugu", "Kannada", "Malayalam"],
+    location: "Fremont, CA", rating: 4.9, reviews: 167,
+    badge: "Legal Aid", badgeColor: "#2563eb",
+    phone: "+1 (510) 555-0892",
+    bio: "Public benefits attorney assisting South Indian communities with Medicaid, disability benefits, SSI, and elder law.",
+  },
+  {
+    id: "12", name: "Carlos Fuentes-Ruiz", firm: "Fuentes Housing & Immigration Law",
+    initials: "CF", avatarColor: "#1d4ed8",
+    photo: "https://i.pravatar.cc/150?img=33",
+    specialties: ["housing", "legal"], languages: ["English", "Spanish", "Haitian Creole"],
+    location: "New York, NY", rating: 4.7, reviews: 229,
+    badge: "Free Consultation", badgeColor: "#16a34a",
+    phone: "+1 (718) 555-0463",
+    bio: "Eviction defence pioneer — represented over 1,200 tenants in NYC housing court with an 87% success rate.",
+  },
+  {
+    id: "13", name: "Irina Volkov", firm: "Eastern European Legal Aid Center",
+    initials: "IV", avatarColor: "#0f172a",
+    photo: "https://i.pravatar.cc/150?img=60",
+    specialties: ["legal", "civic", "housing"], languages: ["English", "Russian", "Ukrainian", "Polish"],
+    location: "Chicago, IL", rating: 4.8, reviews: 134,
+    badge: "Pro Bono Available", badgeColor: "#d97706",
+    phone: "+1 (312) 555-0719",
+    bio: "International law expert assisting Eastern European immigrants with asylum, visa issues, and workers' rights.",
+  },
+  {
+    id: "14", name: "Asha Mohammed", firm: "Horn of Africa Community Legal Services",
+    initials: "AM", avatarColor: "#059669",
+    photo: "https://i.pravatar.cc/150?img=48",
+    specialties: ["civic", "housing", "legal"], languages: ["English", "Somali", "Amharic", "Tigrinya", "Swahili"],
+    location: "Minneapolis, MN", rating: 4.9, reviews: 203,
+    badge: "Legal Aid", badgeColor: "#2563eb",
+    phone: "+1 (612) 555-0345",
+    bio: "Community-based attorney providing comprehensive legal services to Somali and East African families — benefits, housing, and immigration.",
+  },
+  {
+    id: "15", name: "Roberto Castellanos", firm: "Castellanos Healthcare Rights Firm",
+    initials: "RC", avatarColor: "#7e22ce",
+    photo: "https://i.pravatar.cc/150?img=35",
+    specialties: ["healthcare", "legal"], languages: ["English", "Spanish", "Tagalog"],
+    location: "Los Angeles, CA", rating: 4.8, reviews: 98,
+    badge: "Free Consultation", badgeColor: "#16a34a",
+    phone: "+1 (323) 555-0561",
+    bio: "Medical malpractice and disability rights lawyer — SSDI appeals, insurance denials, and hospital billing disputes.",
+  },
+];
+
+function getLawyerSuggestions(docType: string, targetLang: string): Lawyer[] {
+  const type = docType as LawyerSpecialty;
+  // Filter by specialty match
+  const bySpecialty = LAWYERS.filter((l) => l.specialties.includes(type));
+  // Among those, prefer ones who speak the target language
+  const withLang = bySpecialty.filter((l) =>
+    l.languages.some((lang) => lang.toLowerCase() === targetLang.toLowerCase())
+  );
+  // Fall back to specialty match if language not covered
+  const pool = withLang.length >= 2 ? withLang : bySpecialty;
+  // Return top 3, sorted by rating desc
+  return pool.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews).slice(0, 3);
+}
 
 type Step = "input" | "translating" | "result";
 
@@ -857,6 +1044,197 @@ function TranslatePage() {
                 </div>
               )}
             </div>
+
+            {/* ── Lawyer Suggestions ── */}
+            {(() => {
+              const suggestions = getLawyerSuggestions(docType, targetLang);
+              if (suggestions.length === 0) return null;
+              const specialtyLabel = DOC_TYPES.find((d) => d.value === docType)?.label ?? "Your";
+              return (
+                <div style={{
+                  background: "#060606",
+                  border: "1px solid #1a1a1a",
+                  borderRadius: "16px",
+                  padding: "28px",
+                }}>
+
+                  {/* Header */}
+                  <div style={{
+                    display: "flex", alignItems: "flex-start",
+                    justifyContent: "space-between", marginBottom: "20px",
+                    flexWrap: "wrap", gap: "10px",
+                  }}>
+                    <div>
+                      <p style={{
+                        fontSize: "11px", fontWeight: "700", color: "#fff",
+                        opacity: 0.45, textTransform: "uppercase",
+                        letterSpacing: "0.12em", marginBottom: "5px",
+                        display: "flex", alignItems: "center", gap: "6px",
+                      }}>
+                        <Scale size={11} /> Suggested Legal Aid
+                      </p>
+                      <h3 style={{
+                        fontSize: "17px", fontWeight: "800", color: "#fff",
+                        letterSpacing: "-0.3px", margin: 0,
+                      }}>
+                        {specialtyLabel} Lawyers Who Speak {targetLang}
+                      </h3>
+                      <p style={{ fontSize: "12px", color: "#fff", opacity: 0.35, margin: "4px 0 0" }}>
+                        These attorneys are experienced with this type of document and can communicate in your language.
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: "10px", fontWeight: "700", padding: "4px 10px",
+                      borderRadius: "20px", background: "rgba(124,58,237,0.15)",
+                      border: "1px solid rgba(124,58,237,0.3)", color: "#a78bfa",
+                      letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap",
+                    }}>
+                      AI Matched
+                    </span>
+                  </div>
+
+                  {/* Cards */}
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))",
+                    gap: "12px",
+                  }}>
+                    {suggestions.map((lawyer, idx) => (
+                      <div key={lawyer.id} style={{
+                        background: idx === 0 ? "#0e0e0e" : "#090909",
+                        border: idx === 0 ? "1px solid #2a2a2a" : "1px solid #161616",
+                        borderRadius: "12px",
+                        padding: "18px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "14px",
+                        position: "relative",
+                        transition: "border-color 0.2s ease",
+                      }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#3a3a3a"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = idx === 0 ? "#2a2a2a" : "#161616"; }}
+                      >
+                        {idx === 0 && (
+                          <div style={{
+                            position: "absolute", top: "12px", right: "12px",
+                            fontSize: "9px", fontWeight: "800", padding: "3px 8px",
+                            borderRadius: "20px", background: "rgba(255,255,255,0.07)",
+                            color: "#fff", opacity: 0.6, letterSpacing: "0.1em",
+                            textTransform: "uppercase",
+                          }}>Best Match</div>
+                        )}
+
+                        {/* Top row: avatar + name */}
+                        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                          <div style={{
+                            width: "48px", height: "48px", borderRadius: "50%",
+                            flexShrink: 0, overflow: "hidden",
+                            background: lawyer.avatarColor,
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: "14px", fontWeight: "800", color: "#fff",
+                          }}>
+                            <img
+                              src={lawyer.photo}
+                              alt={lawyer.name}
+                              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).style.display = "none";
+                              }}
+                            />
+                          </div>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <p style={{
+                              fontSize: "14px", fontWeight: "700", color: "#fff",
+                              margin: 0, lineHeight: 1.3,
+                              whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                            }}>{lawyer.name}</p>
+                            <p style={{
+                              fontSize: "11px", color: "#fff", opacity: 0.4,
+                              margin: "2px 0 0",
+                              whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                            }}>{lawyer.firm}</p>
+                          </div>
+                        </div>
+
+                        {/* Rating + Badge */}
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                            <Star size={11} color="#fbbf24" fill="#fbbf24" />
+                            <span style={{ fontSize: "12px", fontWeight: "700", color: "#fff" }}>{lawyer.rating.toFixed(1)}</span>
+                            <span style={{ fontSize: "11px", color: "#fff", opacity: 0.35 }}>({lawyer.reviews})</span>
+                          </div>
+                          <div style={{
+                            fontSize: "10px", fontWeight: "700", padding: "3px 8px",
+                            borderRadius: "20px",
+                            background: `${lawyer.badgeColor}18`,
+                            border: `1px solid ${lawyer.badgeColor}40`,
+                            color: lawyer.badgeColor,
+                            letterSpacing: "0.06em",
+                          }}>{lawyer.badge}</div>
+                        </div>
+
+                        {/* Bio */}
+                        <p style={{
+                          fontSize: "12px", lineHeight: "1.6", color: "#fff", opacity: 0.5,
+                          margin: 0, fontFamily: "system-ui, -apple-system, sans-serif",
+                        }}>{lawyer.bio}</p>
+
+                        {/* Languages */}
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+                          {lawyer.languages.map((lang) => {
+                            const isTarget = lang.toLowerCase() === targetLang.toLowerCase();
+                            return (
+                              <span key={lang} style={{
+                                fontSize: "10px", fontWeight: isTarget ? "700" : "500",
+                                padding: "3px 8px", borderRadius: "20px",
+                                background: isTarget ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)",
+                                border: isTarget ? "1px solid #444" : "1px solid #1a1a1a",
+                                color: "#fff",
+                                opacity: isTarget ? 1 : 0.45,
+                              }}>{lang}</span>
+                            );
+                          })}
+                        </div>
+
+                        {/* Location + Phone */}
+                        <div style={{
+                          display: "flex", alignItems: "center",
+                          justifyContent: "space-between", gap: "8px",
+                          paddingTop: "10px", borderTop: "1px solid #1a1a1a",
+                          flexWrap: "wrap",
+                        }}>
+                          <span style={{ fontSize: "11px", color: "#fff", opacity: 0.35 }}>
+                            📍 {lawyer.location}
+                          </span>
+                          <a href={`tel:${lawyer.phone}`} style={{
+                            display: "inline-flex", alignItems: "center", gap: "5px",
+                            padding: "6px 12px", borderRadius: "7px",
+                            background: "#fff", color: "#000",
+                            fontSize: "11px", fontWeight: "700",
+                            fontFamily: "Inconsolata, monospace",
+                            textDecoration: "none", transition: "opacity 0.15s ease",
+                          }}
+                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; }}
+                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+                          >
+                            <Phone size={10} /> Call Now
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Disclaimer */}
+                  <p style={{
+                    fontSize: "10px", color: "#fff", opacity: 0.2,
+                    marginTop: "16px", lineHeight: "1.6",
+                    fontFamily: "system-ui, -apple-system, sans-serif",
+                  }}>
+                    ⚠ Suggestions are provided for informational purposes only. LinguaAid does not endorse specific attorneys. Always verify credentials before engaging legal services.
+                  </p>
+                </div>
+              );
+            })()}
 
             {/* Actions */}
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", paddingTop: "12px" }}>
