@@ -4,11 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import AuthModal from "@/components/AuthModal";
-import { CoverFlow, type CoverFlowItem } from "@/components/ui/coverflow";
 import { MorphingChar } from "@/components/ui/MorphingChar";
+import { CoverFlow, type CoverFlowItem } from "@/components/ui/coverflow";
 import { motion } from "motion/react";
-import { createClient } from "@/lib/supabase/client";
 import {
   Upload, Zap, Shield, FileText, Heart, ArrowRight,
   CheckCircle, Languages, Sparkles, BookOpen, Home,
@@ -59,11 +57,7 @@ const FEATURES = [
 export default function HomePage() {
   const [visible, setVisible] = useState<Set<string>>(new Set());
   const refs = useRef<Record<string, HTMLElement | null>>({});
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalTab, setModalTab] = useState<"signin" | "signup">("signup");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -76,23 +70,11 @@ export default function HomePage() {
     return () => obs.disconnect();
   }, []);
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      setIsLoggedIn(!!data.user);
-    });
-  }, []);
-
   const ref = (id: string) => (el: HTMLElement | null) => { refs.current[id] = el; };
-
-  const openModal = (tab: "signin" | "signup") => {
-    setModalTab(tab);
-    setModalOpen(true);
-  };
 
   return (
     <div style={{ minHeight: "100vh", background: "#000" }}>
-      <Navbar onAuthClick={openModal} />
-      <AuthModal open={modalOpen} defaultTab={modalTab} onClose={() => setModalOpen(false)} />
+      <Navbar />
 
       {/* ── HERO ── */}
       <section className="grid-pattern hero-section" style={{
@@ -228,11 +210,11 @@ export default function HomePage() {
 
           <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
             <button
-              onClick={() => isLoggedIn ? router.push("/dashboard") : openModal("signup")}
+              onClick={() => router.push("/translate")}
               className="btn-primary"
               style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "14px", padding: "12px 26px" }}
             >
-              {isLoggedIn ? "Go to Dashboard" : "Start Translating Free"} <ArrowRight size={15} />
+              Start Translating Free <ArrowRight size={15} />
             </button>
             <a href="#how-it-works" className="btn-secondary" style={{
               display: "inline-flex", alignItems: "center",
@@ -473,11 +455,11 @@ export default function HomePage() {
             </p>
             <div style={{ display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap" }}>
               <button
-                onClick={() => openModal("signup")}
+                onClick={() => router.push("/translate")}
                 className="btn-primary"
                 style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "14px", padding: "12px 28px" }}
               >
-                Create Free Account <ChevronRight size={16} />
+                Start Translating Free <ChevronRight size={16} />
               </button>
             </div>
           </div>

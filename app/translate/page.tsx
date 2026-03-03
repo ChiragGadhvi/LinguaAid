@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useCallback, useRef, Suspense } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
 import Navbar from "@/components/Navbar";
 import SelectionTranslator from "@/components/SelectionTranslator";
 import {
@@ -267,9 +266,7 @@ function getLawyerSuggestions(docType: string, targetLang: string): Lawyer[] {
 type Step = "input" | "translating" | "result";
 
 function TranslatePage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const supabase = createClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [step, setStep] = useState<Step>("input");
@@ -298,28 +295,6 @@ function TranslatePage() {
     l.toLowerCase().includes(langSearch.toLowerCase())
   );
 
-  useEffect(() => {
-    const id = searchParams.get("id");
-    if (!id) return;
-    const load = async () => {
-      const { data } = await supabase
-        .from("translations")
-        .select("*, documents(*)")
-        .eq("id", id)
-        .single();
-      if (data) {
-        setTranslatedText(data.translated_text ?? "");
-        setSimplifiedText(data.simplified_text ?? "");
-        setKeyPoints(data.key_points ?? []);
-        setTargetLang(data.target_language);
-        setInputText(data.documents?.original_text ?? "");
-        setDocType(data.documents?.document_type ?? "other");
-        setFileName(data.documents?.file_name ?? "");
-        setStep("result");
-      }
-    };
-    load();
-  }, []);
 
   const handleFileUpload = useCallback(async (file: File) => {
     if (!file.name.toLowerCase().endsWith(".pdf")) {
@@ -371,8 +346,6 @@ function TranslatePage() {
 
   const handleTranslate = async () => {
     if (!inputText.trim()) { setError("Please enter or upload some text first."); return; }
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { router.push("/auth"); return; }
 
     setStep("translating");
     setError("");
@@ -405,23 +378,6 @@ function TranslatePage() {
       setKeyPoints(simplifyData.keyPoints ?? []);
       setUrgentActions(simplifyData.urgentActions ?? []);
       if (simplifyData.isMock) setIsMock(true);
-
-      setProgress("Saving to your history…");
-      setProgressStep(3);
-      const { data: doc } = await supabase.from("documents").insert({
-        user_id: user.id, original_text: inputText,
-        file_name: fileName || "Pasted text", document_type: docType,
-      }).select().single();
-
-      if (doc) {
-        await supabase.from("translations").insert({
-          document_id: doc.id, user_id: user.id,
-          source_language: "en", target_language: targetLang,
-          translated_text: translated,
-          simplified_text: simplifyData.simplifiedText ?? "",
-          key_points: simplifyData.keyPoints ?? [],
-        });
-      }
 
       setStep("result");
       setProgress("");
@@ -529,7 +485,6 @@ function TranslatePage() {
               {[
                 { label: "Translating document",              done: progressStep > 1 },
                 { label: "Creating plain-language summary",   done: progressStep > 2 },
-                { label: "Saving to your history",           done: progressStep > 3 },
               ].map(({ label, done }, i) => (
                 <div key={label} style={{
                   display: "flex", alignItems: "center", gap: "10px",
@@ -1248,16 +1203,6 @@ function TranslatePage() {
               }}>
                 <RotateCcw size={13} /> Translate Another Document
               </button>
-              <Link href="/dashboard" style={{
-                display: "inline-flex", alignItems: "center", gap: "7px",
-                padding: "10px 20px", borderRadius: "8px",
-                background: "transparent", border: "1px solid #2a2a2a",
-                color: "#fff", fontFamily: "Inconsolata, monospace",
-                fontSize: "13px", fontWeight: "600", textDecoration: "none",
-                opacity: 0.7, transition: "opacity 0.15s ease",
-              }}>
-                View History
-              </Link>
             </div>
           </div>
         )}

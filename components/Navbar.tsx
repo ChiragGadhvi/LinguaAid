@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { Menu, X, LogOut, LayoutDashboard, FileText } from "lucide-react";
 
 interface NavbarProps {
@@ -14,10 +13,8 @@ interface NavbarProps {
 export default function Navbar({ onAuthClick }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState<{ email?: string } | null>(null);
   const router = useRouter();
   const pathname = usePathname();
-  const supabase = createClient();
   const isHome = pathname === "/";
 
   useEffect(() => {
@@ -26,30 +23,7 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user ? { email: data.user.email } : null);
-    });
-    const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
-      setUser(session?.user ? { email: session.user.email } : null);
-    });
-    return () => listener.subscription.unsubscribe();
-  }, []);
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-    router.refresh();
-  };
-
-  const handleAuth = (tab: "signin" | "signup") => {
-    setMenuOpen(false);
-    if (isHome && onAuthClick) {
-      onAuthClick(tab);
-    } else {
-      router.push(`/auth?tab=${tab}`);
-    }
-  };
 
   return (
     <nav className="navbar" style={{
@@ -74,31 +48,6 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
 
         {/* Desktop right side */}
         <div className="desk-actions" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          {user ? (
-            <>
-              {/* Single set: icon always shown, text shown only on desktop via CSS */}
-              <Link href="/dashboard" className="nav-action-btn" style={{
-                display: "flex", alignItems: "center", gap: "6px",
-                padding: "7px 10px", borderRadius: "7px", textDecoration: "none",
-                fontSize: "13px", fontWeight: "600", color: "#ccc",
-                border: "1px solid #2a2a2a", background: "#0d0d0d",
-                transition: "all 0.15s ease",
-              }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#fff";
-                  (e.currentTarget as HTMLElement).style.borderColor = "#444";
-                  (e.currentTarget as HTMLElement).style.background = "#1a1a1a";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#ccc";
-                  (e.currentTarget as HTMLElement).style.borderColor = "#2a2a2a";
-                  (e.currentTarget as HTMLElement).style.background = "#0d0d0d";
-                }}
-              >
-                <LayoutDashboard size={15} />
-                <span className="nav-btn-label">Dashboard</span>
-              </Link>
-
               <Link href="/translate" className="nav-action-btn" style={{
                 display: "flex", alignItems: "center", gap: "6px",
                 padding: "7px 10px", borderRadius: "7px", textDecoration: "none",
@@ -112,116 +61,10 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
                 <FileText size={15} />
                 <span className="nav-btn-label">Translate</span>
               </Link>
-
-              <button onClick={handleSignOut} className="nav-action-btn" style={{
-                display: "flex", alignItems: "center", gap: "6px",
-                padding: "7px 10px", borderRadius: "7px",
-                background: "#0d0d0d", border: "1px solid #2a2a2a",
-                cursor: "pointer", color: "#888",
-                fontFamily: "Inconsolata, monospace",
-                fontSize: "12px", fontWeight: "600",
-                transition: "all 0.15s ease",
-              }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#ff6666";
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,68,68,0.3)";
-                  (e.currentTarget as HTMLElement).style.background = "rgba(255,68,68,0.06)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#888";
-                  (e.currentTarget as HTMLElement).style.borderColor = "#2a2a2a";
-                  (e.currentTarget as HTMLElement).style.background = "#0d0d0d";
-                }}
-              >
-                <LogOut size={15} />
-                <span className="nav-btn-label">Sign Out</span>
-              </button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => handleAuth("signin")} className="mob-hide-btn" style={{
-                padding: "7px 14px", borderRadius: "7px",
-                fontSize: "13px", fontWeight: "600", color: "#ccc",
-                border: "1px solid #2a2a2a", background: "#0d0d0d",
-                cursor: "pointer", fontFamily: "Inconsolata, monospace",
-                transition: "all 0.15s ease",
-              }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#fff";
-                  (e.currentTarget as HTMLElement).style.borderColor = "#444";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#ccc";
-                  (e.currentTarget as HTMLElement).style.borderColor = "#2a2a2a";
-                }}
-              >
-                Sign In
-              </button>
-              <button onClick={() => handleAuth("signup")} className="mob-hide-btn" style={{
-                padding: "7px 14px", borderRadius: "7px",
-                fontSize: "13px", fontWeight: "700", color: "#000",
-                background: "#fff", border: "1px solid #fff",
-                cursor: "pointer", fontFamily: "Inconsolata, monospace",
-                transition: "all 0.15s ease",
-              }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#e0e0e0"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#fff"; }}
-              >
-                Get Started
-              </button>
-              {/* Hamburger — only for logged-out mobile */}
-              <button onClick={() => setMenuOpen(!menuOpen)} className="mob-btn" style={{
-                background: "#0d0d0d", border: "1px solid #2a2a2a",
-                borderRadius: "7px", cursor: "pointer", color: "#fff",
-                padding: "7px", display: "none", alignItems: "center",
-              }}>
-                {menuOpen ? <X size={17} /> : <Menu size={17} />}
-              </button>
-            </>
-          )}
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="mobile-menu" style={{
-          background: "#050505", borderTop: "1px solid #111",
-          padding: "16px 20px",
-        }}>
-          {user ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              <button onClick={handleSignOut} style={{
-                display: "flex", alignItems: "center", gap: "8px",
-                padding: "12px 14px", borderRadius: "8px",
-                fontSize: "14px", fontWeight: "600", color: "#ff6666",
-                background: "rgba(255,68,68,0.06)", border: "1px solid rgba(255,68,68,0.2)",
-                cursor: "pointer", fontFamily: "Inconsolata, monospace", textAlign: "left",
-              }}>
-                <LogOut size={15} /> Sign Out
-              </button>
-            </div>
-          ) : (
-            <div style={{ display: "flex", gap: "8px" }}>
-              <button onClick={() => handleAuth("signin")} style={{
-                flex: 1, padding: "11px", borderRadius: "8px",
-                fontSize: "14px", fontWeight: "600", color: "#fff",
-                background: "#0d0d0d", border: "1px solid #333",
-                cursor: "pointer", fontFamily: "Inconsolata, monospace",
-              }}>
-                Sign In
-              </button>
-              <button onClick={() => handleAuth("signup")} style={{
-                flex: 1, padding: "11px", borderRadius: "8px",
-                fontSize: "14px", fontWeight: "700", color: "#000",
-                background: "#fff", border: "none",
-                cursor: "pointer", fontFamily: "Inconsolata, monospace",
-              }}>
-                Get Started
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+
 
 
       <style>{`
