@@ -1,5 +1,48 @@
 import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
+
+// Map language names to ISO 639-1 codes for MyMemory API
+const LANG_CODES: Record<string, string> = {
+  English: "en", Hindi: "hi", Arabic: "ar", Spanish: "es", French: "fr",
+  Mandarin: "zh", Portuguese: "pt", Bengali: "bn", Russian: "ru", Urdu: "ur",
+  Japanese: "ja", Swahili: "sw", Turkish: "tr", Korean: "ko", Vietnamese: "vi",
+  Thai: "th", Tagalog: "tl", Amharic: "am", Somali: "so", "Haitian Creole": "ht",
+  Pashto: "ps", Dari: "prs", Tigrinya: "ti", Burmese: "my", Nepali: "ne",
+  Khmer: "km", Lao: "lo", Hmong: "hmn", Yoruba: "yo", Igbo: "ig", Zulu: "zu",
+  Malay: "ms", Indonesian: "id", Persian: "fa", Punjabi: "pa", Tamil: "ta",
+  Telugu: "te", Gujarati: "gu", Marathi: "mr", Kannada: "kn", Malayalam: "ml",
+  Sinhala: "si", Ukrainian: "uk", Polish: "pl", Romanian: "ro", Dutch: "nl",
+  Swedish: "sv", Norwegian: "no", German: "de", Italian: "it",
+};
+
+// Split text into chunks <= 450 chars at word boundaries
+function chunkText(text: string, maxLen = 450): string[] {
+  const chunks: string[] = [];
+  let remaining = text.trim();
+  while (remaining.length > maxLen) {
+    let cutAt = remaining.lastIndexOf(" ", maxLen);
+    if (cutAt <= 0) cutAt = maxLen;
+    chunks.push(remaining.slice(0, cutAt));
+    remaining = remaining.slice(cutAt).trim();
+  }
+  if (remaining) chunks.push(remaining);
+  return chunks;
+}
+
+async function myMemoryTranslate(text: string, from: string, to: string): Promise<string> {
+  const chunks = chunkText(text);
+  const results: string[] = [];
+
+  for (const chunk of chunks) {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=${from}|${to}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`MyMemory error: ${res.status}`);
+    const data = await res.json();
+    if (data.responseStatus !== 200) throw new Error(data.responseDetails ?? "MyMemory failed");
+    results.push(data.responseData.translatedText);
+  }
+
+  return results.join(" ");
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,107 +55,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const lingoKey = process.env.LINGODOTDEV_API_KEY;
-    const openaiKey = process.env.OPENAI_API_KEY;
+    const fromCode = LANG_CODES[sourceLanguage] ?? sourceLanguage;
+    const toCode = LANG_CODES[targetLanguage] ?? targetLanguage;
 
-    // 1. Try Lingo.dev first if key exists
-    if (lingoKey) {
-      try {
-        const response = await fetch("https://api.lingo.dev/v1/translate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${lingoKey}`,
-          },
-          body: JSON.stringify({
-            text,
-            sourceLocale: sourceLanguage,
-            targetLocale: targetLanguage,
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          return NextResponse.json({
-            translatedText: data.translatedText ?? data.text ?? text,
-            sourceLanguage,
-            targetLanguage,
-            provider: "lingo",
-          });
-        }
-      } catch (e) {
-        console.warn("Lingo.dev translation failed, falling back...", e);
-      }
+    // If source and target are the same, return as-is
+    if (fromCode === toCode) {
+      return NextResponse.json({ translatedText: text, sourceLanguage, targetLanguage, provider: "passthrough" });
     }
 
-    // 2. Fallback to OpenAI if key exists
-    if (openaiKey) {
-      try {
-        const openai = new OpenAI({ apiKey: openaiKey });
-        
-        // System prompt for high-quality, direct translation
-        const completion = await openai.chat.completions.create({
-          model: "gpt-4o-mini", // Fast and cheap model
-          messages: [
-            {
-              role: "system",
-              content: `You are a professional translator. 
-              Translate the following text from ${sourceLanguage === "en" ? "English" : sourceLanguage} into ${targetLanguage}.
-              - Maintain the original tone and formatting.
-              - Do not add any introductory or concluding remarks.
-              - Provide ONLY the translated text.
-              - If the target language is English, refine the text for clarity and flow.`,
-            },
-            {
-              role: "user",
-              content: text,
-            },
-          ],
-          temperature: 0.3,
-        });
-
-        const translatedText = completion.choices[0]?.message?.content?.trim();
-
-        if (translatedText) {
-          return NextResponse.json({
-            translatedText,
-            sourceLanguage,
-            targetLanguage,
-            provider: "openai",
-          });
-        }
-      } catch (e) {
-        console.error("OpenAI translation failed:", e);
-      }
+    // 1. Try MyMemory (free, no key required)
+    try {
+      const translatedText = await myMemoryTranslate(text, fromCode, toCode);
+      return NextResponse.json({ translatedText, sourceLanguage, targetLanguage, provider: "mymemory" });
+    } catch (e) {
+      console.warn("MyMemory translation failed:", e);
     }
 
-    // 3. Fallback to Mock if NO keys work
-    // We only show mock if we really have to, but we mark it clearly.
-    console.warn("No translation provider available. Using mock.");
-
-    const mockTranslations: Record<string, string> = {
-      Hindi: `[हिंदी अनुवाद Demo] ${text.slice(0, 100)}... (Real translation requires API key)`,
-      Spanish: `[Traducción Demo] ${text.slice(0, 100)}... (Real translation requires API key)`,
-      French: `[Traduction Demo] ${text.slice(0, 100)}... (Real translation requires API key)`,
-      // ... add others if needed or rely on generic fallback
-    };
-
-    const translatedText =
-      mockTranslations[targetLanguage] ??
-      `[${targetLanguage} Translation Demo] ${text.slice(0, 200)}... (Please add OPENAI_API_KEY or LINGODOTDEV_API_KEY to .env.local)`;
-
-    return NextResponse.json({
-      translatedText,
-      sourceLanguage,
-      targetLanguage,
-      isMock: true,
-    });
+    // 2. Mock fallback
+    console.warn("No translation provider succeeded. Using mock.");
+    const translatedText = `[${targetLanguage} Translation] ${text.slice(0, 200)}... (Translation service temporarily unavailable — please try again)`;
+    return NextResponse.json({ translatedText, sourceLanguage, targetLanguage, isMock: true });
 
   } catch (error) {
     console.error("Translation route error:", error);
-    return NextResponse.json(
-      { error: "Translation failed internal error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Translation failed internal error" }, { status: 500 });
   }
 }
